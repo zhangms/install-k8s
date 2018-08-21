@@ -30,7 +30,7 @@ function createBaseConfig() {
     base_config='KUBE_BASE_OPTIONS="'
     base_config+='--logtostderr=true --log-dir=/var/log/kubernetes --v=2'
     base_config+='"\n'
-    base_config+='KUBE_MASTER="http://'
+    base_config+='KUBE_MASTER="--master=http://'
     base_config+=$kube_master_ip:$kube_master_port
     base_config+='"\n'
 
