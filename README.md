@@ -1,1 +1,1 @@
-just test on centos
+just test on centos7

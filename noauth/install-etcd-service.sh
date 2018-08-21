@@ -26,3 +26,8 @@ function createConfigFile() {
 
 create_serviceFile
 createConfigFile
+systemctl daemon-reload
+systemctl enable etcd
+systemctl start etcd
+systemctl status etcd
+
