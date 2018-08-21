@@ -1,6 +1,6 @@
 #!/bin/bash
 
 ./install-etcd-service.sh
-./install-kube-apiserver-service.sh
-./install-kube-controller-manager-service.sh
-./install-kube-scheduler-service.sh
+./install-kube-apiserver-service.sh $1 $2
+./install-kube-controller-manager-service.sh $1 $2
+./install-kube-scheduler-service.sh $1 $2
