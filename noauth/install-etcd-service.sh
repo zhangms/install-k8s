@@ -27,7 +27,8 @@ function createConfigFile() {
 create_serviceFile
 createConfigFile
 systemctl daemon-reload
+systemctl disable etcd
 systemctl enable etcd
-systemctl start etcd
+systemctl restart etcd
 systemctl status etcd
 
