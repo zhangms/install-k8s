@@ -11,7 +11,7 @@ function create_serviceFile() {
          Type=notify\n
          WorkingDirectory=/var/lib/etcd/\n
          EnvironmentFile=-/etc/etcd/etcd.conf\n
-         ExecStart=/usr/local/bin/etcd \${ETCD_OPTIONS}\n
+         ExecStart=/usr/local/bin/etcd \$ETCD_OPTIONS\n
          Restart=on-failure\n
          RestartSec=5\n
          LimitNOFILE=65536\n\n[Install]\n
