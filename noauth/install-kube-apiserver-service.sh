@@ -12,7 +12,7 @@ function create_serviceFile() {
          [Service]\n
          EnvironmentFile=-/etc/kubernetes/config\n
          EnvironmentFile=-/etc/kubernetes/apiserver\n
-         ExecStart=/usr/local/bin/kube-apiserver ${KUBE_BASE_OPTIONS} ${KUBE_API_OPTIONS}\n
+         ExecStart=/usr/local/bin/kube-apiserver "${KUBE_BASE_OPTIONS} ${KUBE_API_OPTIONS}"\n
          Restart=on-failure\n
          Type=notify\n
          LimitNOFILE=65536\n\n
