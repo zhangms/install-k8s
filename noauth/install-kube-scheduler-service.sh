@@ -3,15 +3,15 @@
 kube_master_ip=$1
 kube_master_port=$2
 
-serviceName=kube-controller-manager
+serviceName=kube-scheduler
 
 function create_serviceFile() {
     str="[Unit]\n
-         Description=Kubernetes Controller Manager\n\n
+         Description=Kubernetes Scheduler Plugin\n\n
          [Service]\n
          EnvironmentFile=-/etc/kubernetes/config\n
-         EnvironmentFile=-/etc/kubernetes/controller-manager\n
-         ExecStart=/usr/local/bin/kube-controller-manager \$KUBE_MASTER \$KUBE_BASE_OPTIONS \$KUBE_CONTROLLER_OPTIONS\n
+         EnvironmentFile=-/etc/kubernetes/scheduler\n
+         ExecStart=/usr/local/bin/kube-scheduler \$KUBE_MASTER \$KUBE_BASE_OPTIONS \$KUBE_SCHEDULER_OPTIONS\n
          Restart=on-failure\n
          LimitNOFILE=65536\n\n
          [Install]\n
@@ -38,10 +38,10 @@ function createServiceConfig() {
 
     mkdir /etc/kubernetes/
 
-    base_config='KUBE_CONTROLLER_OPTIONS="'
-    base_config+='--service-cluster-ip-range=10.254.0.0/16 '
+    base_config='KUBE_SCHEDULER_OPTIONS="'
+    base_config+=''
     base_config+='"\n'
-    echo -e $base_config > /etc/kubernetes/controller-manager
+    echo -e $base_config > /etc/kubernetes/scheduler
 }
 
 function createConfigFile() {

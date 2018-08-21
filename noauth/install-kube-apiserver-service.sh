@@ -3,8 +3,9 @@
 kube_master_ip=$1
 kube_master_port=$2
 
+serviceName=kube-apiserver
+
 function create_serviceFile() {
-    serviceFile="/usr/lib/systemd/system/kube-apiserver.service"
     str="[Unit]\n
          Description=Kubernetes API Service\n
          After=network.target\n
@@ -18,7 +19,7 @@ function create_serviceFile() {
          LimitNOFILE=65536\n\n
          [Install]\n
          WantedBy=multi-user.target\n"
-    echo -e $str > $serviceFile
+    echo -e $str > /usr/lib/systemd/system/${serviceName}.service
 }
 
 function createBaseConfig() {
@@ -58,8 +59,8 @@ function createConfigFile() {
 create_serviceFile
 createConfigFile
 systemctl daemon-reload
-systemctl disable kube-apiserver
-systemctl enable kube-apiserver
-systemctl restart kube-apiserver
-systemctl status kube-apiserver
+systemctl disable ${serviceName}
+systemctl enable ${serviceName}
+systemctl restart ${serviceName}
+systemctl status ${serviceName}
 

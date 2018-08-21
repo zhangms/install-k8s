@@ -1,8 +1,9 @@
 #!/bin/bash
 
+serviceName=etcd
+
 function create_serviceFile() {
     mkdir -p /var/lib/etcd/
-    serviceFile="/usr/lib/systemd/system/etcd.service"
     str="[Unit] \n
          Description=Extcd Server\n
          After=network.target\n
@@ -16,7 +17,7 @@ function create_serviceFile() {
          RestartSec=5\n
          LimitNOFILE=65536\n\n[Install]\n
          WantedBy=multi-user.target\n"
-    echo -e $str > $serviceFile
+    echo -e $str > /usr/lib/systemd/system/${serviceName}.service
 }
 
 function createConfigFile() {
@@ -27,8 +28,8 @@ function createConfigFile() {
 create_serviceFile
 createConfigFile
 systemctl daemon-reload
-systemctl disable etcd
-systemctl enable etcd
-systemctl restart etcd
-systemctl status etcd
+systemctl disable
+systemctl enable ${serviceName}
+systemctl restart ${serviceName}
+systemctl status ${serviceName}
 
