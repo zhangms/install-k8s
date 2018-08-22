@@ -121,12 +121,12 @@ EOF
 }
 
 create_kubernetes_csr() {
+    echo "生成 kubernetes 证书和私钥"
     #创建配置文件
     create_kubernetes_csr_json
-    cfssl gencert -ca=ca.pem -ca-key=ca-key.pem \
+    cfssl gencert -ca=${SSL_DIR}/ca.pem -ca-key=${SSL_DIR}/ca-key.pem \
          -config=${SSL_DIR}/ca-config.json \
-         -profile=kubernetes ${SSL_DIR}/kubernetes-csr.json \
-         | cfssljson -bare ${SSL_DIR}/kubernetes
+         -profile=kubernetes ${SSL_DIR}/kubernetes-csr.json | cfssljson -bare ${SSL_DIR}/kubernetes
 }
 
 do_create() {
