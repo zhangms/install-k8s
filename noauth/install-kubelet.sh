@@ -37,16 +37,17 @@ function createBaseConfig() {
 }
 
 function createKubeConfig() {
-    rm -rf /etc/kubernetes/kubelet.conf
+    rm -rf /etc/kubernetes/bootstrap.kubeconfig
     kubectl config set-cluster kubernetes-demo \
       --server=http://${kube_master_ip}:${kube_master_port} \
-      --kubeconfig=/etc/kubernetes/kubelet.conf \
+      --kubeconfig=/etc/kubernetes/bootstrap.kubeconfig \
       --insecure-skip-tls-verify=true
 }
 
 function createServiceConfig() {
     mkdir /etc/kubernetes/
     base_config='KUBELET_OPTIONS="'
+    base_config+='--bootstrap-kubeconfig=/etc/kubernetes/bootstrap.kubeconfig'
     base_config+='--kubeconfig=/etc/kubernetes/kubelet.conf'
     base_config+='"\n'
     echo -e $base_config > /etc/kubernetes/kubelet
