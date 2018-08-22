@@ -23,7 +23,7 @@ function createServiceFile() {
 }
 
 function createTokenAuthFile() {
-    echo "token_admin,admin,admin" > /etc/kubernetes/token-auth-file
+    echo "token_admin,admin,1" > /etc/kubernetes/token-auth-file
 }
 
 function createServiceConfig() {
