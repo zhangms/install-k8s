@@ -37,18 +37,21 @@ function createBaseConfig() {
 }
 
 function createKubeConfig() {
-    rm -rf /etc/kubernetes/bootstrap.kubeconfig
-    kubectl config set-cluster kubernetes-demo \
-      --server=http://${kube_master_ip}:${kube_master_port} \
-      --kubeconfig=/etc/kubernetes/bootstrap.kubeconfig \
-      --insecure-skip-tls-verify=true
+    rm -rf /etc/kubernetes/kubeconfig
+    kubectl config set-cluster kubernetes-demo --server=http://${kube_master_ip}:${kube_master_port} --kubeconfig=/etc/kubernetes/kubeconfig
+    kubectl config set-credentials admin --username=admin --kubeconfig=/etc/kubernetes/kubeconfig
+    kubectl config set-context kube-demo-ctx --cluster=kubernetes-demo --user=admin --kubeconfig=/etc/kubernetes/kubeconfig
+    kubectl config use-context kube-demo-ctx --kubeconfig=/etc/kubernetes/kubeconfig
 }
 
 function createServiceConfig() {
     mkdir /etc/kubernetes/
     base_config='KUBELET_OPTIONS="'
-    base_config+='--bootstrap-kubeconfig=/etc/kubernetes/bootstrap.kubeconfig '
-    base_config+='--kubeconfig=/etc/kubernetes/kubelet.conf '
+    base_config+=' --kubeconfig=/etc/kubernetes/kubeconfig'
+    base_config+=' --runtime-cgroups=/systemd/system.slice'
+    base_config+=' --kubelet-cgroups=/systemd/system.slice'
+    base_config+=' --enable-server=true'
+    base_config+=' --enable-debugging-handlers=true'
     base_config+='"\n'
     echo -e $base_config > /etc/kubernetes/kubelet
 }
