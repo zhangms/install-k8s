@@ -37,7 +37,10 @@ function createBaseConfig() {
 }
 
 function createKubeConfig() {
-    kubectl config set-cluster kubernetes-demo --server=http://${kube_master_ip}:${kube_master_port}  --kubeconfig=/etc/kubernetes/kubelet.conf
+    kubectl config set-cluster kubernetes-demo \
+      --server=http://${kube_master_ip}:${kube_master_port} \
+      --kubeconfig=/etc/kubernetes/kubelet.conf \
+      --insecure-skip-tls-verify=true
 }
 
 function createServiceConfig() {
