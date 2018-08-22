@@ -14,7 +14,7 @@ function create_serviceFile() {
          WorkingDirectory=/var/lib/kubelet\n
          EnvironmentFile=-/etc/kubernetes/config\n
          EnvironmentFile=-/etc/kubernetes/kubelet\n
-         ExecStart=/usr/local/bin/kubelet \$KUBE_MASTER \$KUBE_BASE_OPTIONS \$KUBELET_OPTIONS\n
+         ExecStart=/usr/local/bin/kubelet \$KUBE_BASE_OPTIONS \$KUBELET_OPTIONS\n
          Restart=on-failure\n\n
          [Install]\n
          WantedBy=multi-user.target\n"
@@ -36,12 +36,14 @@ function createBaseConfig() {
     echo -e $base_config > /etc/kubernetes/config
 }
 
+function createKubeConfig() {
+    kubectl config set-cluster kubernetes-demo --server=http://${kube_master_ip}:${kube_master_port}  --kubeconfig=/etc/kubernetes/kubelet.conf
+}
+
 function createServiceConfig() {
-
     mkdir /etc/kubernetes/
-
     base_config='KUBELET_OPTIONS="'
-    base_config+=''
+    base_config+='--kubeconfig=/etc/kubernetes/kubelet.conf'
     base_config+='"\n'
     echo -e $base_config > /etc/kubernetes/kubelet
 }
