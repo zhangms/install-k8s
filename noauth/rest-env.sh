@@ -20,7 +20,7 @@ function createBaseConfig() {
 
 function createKubeConfig() {
     rm -rf /etc/kubernetes/kubeconfig
-    kubectl config set-cluster kubernetes-demo --server=http://${kube_master_ip}:${kube_master_port} --kubeconfig=/etc/kubernetes/kubeconfig
+    kubectl config set-cluster kubernetes-demo --server=https://${kube_master_ip}:${kube_master_port} --kubeconfig=/etc/kubernetes/kubeconfig
     kubectl config set-credentials admin --token=token_admin --kubeconfig=/etc/kubernetes/kubeconfig
     kubectl config set-context kube-demo-ctx --cluster=kubernetes-demo --user=admin --kubeconfig=/etc/kubernetes/kubeconfig
     kubectl config use-context kube-demo-ctx --kubeconfig=/etc/kubernetes/kubeconfig
