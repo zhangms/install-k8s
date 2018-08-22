@@ -24,8 +24,8 @@
 
 
 #证书存放目录
-#SSL_DIR=/etc/kubernetes/ssl
-SSL_DIR=/Users/ZMS/Downloads/ssl
+SSL_DIR=/etc/kubernetes/ssl
+#SSL_DIR=/Users/ZMS/Downloads/ssl
 
 #集群节点
 CLUSTER_HOSTS=$(cat ./cluster_host.txt)
@@ -121,7 +121,7 @@ EOF
 }
 
 create_kubernetes_csr() {
-    echo "生成 kubernetes 证书和私钥"
+    echo "生成 kubernetes 证书和私钥..."
     #创建配置文件
     create_kubernetes_csr_json
     cfssl gencert -ca=${SSL_DIR}/ca.pem -ca-key=${SSL_DIR}/ca-key.pem \
