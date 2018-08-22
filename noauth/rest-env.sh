@@ -1,5 +1,8 @@
 #!/bin/bash
 
+kube_master_ip=$1
+kube_master_port=$2
+
 rm -rf ${HOME}/.kube/*
 rm -rf /etc/kubernetes/*
 rm -rf /var/lib/etcd/*
