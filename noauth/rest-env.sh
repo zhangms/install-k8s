@@ -28,3 +28,5 @@ function createKubeConfig() {
 
 createBaseConfig
 createKubeConfig
+
+cp /etc/kubernetes/kubeconfig ${HOME}/.kube/config
