@@ -191,7 +191,7 @@ create_kube_proxy_csr(){
 }
 
 validate_kubernetes_pem() {
-    echo "以校验Kubernetes证书..."
+    echo "校验Kubernetes证书..."
     openssl x509 -noout -text -in ${SSL_DIR}/kubernetes.pem
 }
 
@@ -202,6 +202,7 @@ do_create() {
    create_admin_csr
    create_kube_proxy_csr
    validate_kubernetes_pem
+   echo "证书生成完毕..."
 }
 
 do_create
