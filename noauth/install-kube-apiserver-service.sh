@@ -5,7 +5,7 @@ kube_master_port=$2
 
 serviceName=kube-apiserver
 
-function create_serviceFile() {
+function createServiceFile() {
     str="[Unit]\n
          Description=Kubernetes API Service\n
          After=network.target\n
@@ -22,41 +22,28 @@ function create_serviceFile() {
     echo -e $str > /usr/lib/systemd/system/${serviceName}.service
 }
 
-function createBaseConfig() {
-
-    mkdir /etc/kubernetes/
-    mkdir /var/log/kubernetes/
-
-    base_config='KUBE_BASE_OPTIONS="'
-    base_config+='--logtostderr=true --log-dir=/var/log/kubernetes --v=2'
-    base_config+='"\n'
-    base_config+='KUBE_MASTER="--master=http://'
-    base_config+=$kube_master_ip:$kube_master_port
-    base_config+='"\n'
-
-    echo -e $base_config > /etc/kubernetes/config
+function createTokenAuthFile() {
+    echo "token_admin,admin,admin" > /etc/kubernetes/token-auth-file
 }
 
 function createServiceConfig() {
-
     mkdir /etc/kubernetes/
-
     base_config='KUBE_API_OPTIONS="'
-    base_config+=' --insecure-bind-address=0.0.0.0'
-    base_config+=' --insecure-port='$kube_master_port
-    base_config+=' --anonymous-auth=true'
-    base_config+=' --authorization-mode=AlwaysAllow'
+    base_config+=' --bind-address=0.0.0.0'
+    base_config+=' --secure-port='$kube_master_port
+    base_config+=' --insecure-port=0'
     base_config+=' --etcd-servers=http://127.0.0.1:2379'
+    base_config+=' --token-auth-file=/etc/kubernetes/token-auth-file'
     base_config+='"\n'
     echo -e $base_config > /etc/kubernetes/apiserver
 }
 
 function createConfigFile() {
-    createBaseConfig
     createServiceConfig
+    createTokenAuthFile
 }
 
-create_serviceFile
+createServiceFile
 createConfigFile
 systemctl daemon-reload
 systemctl disable ${serviceName}
