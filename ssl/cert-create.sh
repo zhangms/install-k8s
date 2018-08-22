@@ -80,7 +80,7 @@ cat <<EOF > ${SSL_DIR}/ca-csr.json
 EOF
 }
 
-create_ca() {
+create_ca_csr() {
     echo "创建CA证书..."
     #创建配置文件
     create_ca_config_json
@@ -129,10 +129,79 @@ create_kubernetes_csr() {
          -profile=kubernetes ${SSL_DIR}/kubernetes-csr.json | cfssljson -bare ${SSL_DIR}/kubernetes
 }
 
+
+create_admin_csr_json() {
+cat <<EOF > ${SSL_DIR}/admin-csr.json
+{
+  "CN": "admin",
+  "hosts": [],
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  },
+  "names": [
+    {
+      "C": "CN",
+      "ST": "BeiJing",
+      "L": "BeiJing",
+      "O": "system:masters",
+      "OU": "System"
+    }
+  ]
+}
+EOF
+}
+
+create_admin_csr() {
+   echo "生成admin证书和私钥..."
+   create_admin_csr_json
+   cfssl gencert -ca=${SSL_DIR}/ca.pem -ca-key=${SSL_DIR}/ca-key.pem \
+        -config=${SSL_DIR}/ca-config.json \
+        -profile=kubernetes ${SSL_DIR}/admin-csr.json | cfssljson -bare ${SSL_DIR}/admin
+}
+
+create_kube_proxy_csr_json() {
+cat <<EOF > ${SSL_DIR}/kube-proxy-csr.json
+{
+  "CN": "system:kube-proxy",
+  "hosts": [],
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  },
+  "names": [
+    {
+      "C": "CN",
+      "ST": "BeiJing",
+      "L": "BeiJing",
+      "O": "k8s",
+      "OU": "System"
+    }
+  ]
+}
+EOF
+}
+
+create_kube_proxy_csr(){
+    echo "生成kube-proxy证书和私钥..."
+    create_kube_proxy_csr_json
+    cfssl gencert -ca=${SSL_DIR}/ca.pem -ca-key=${SSL_DIR}/ca-key.pem \
+         -config=${SSL_DIR}/ca-config.json \
+         -profile=kubernetes  ${SSL_DIR}/kube-proxy-csr.json | cfssljson -bare ${SSL_DIR}/kube-proxy
+}
+
+validate_kubernetes_pem() {
+    echo "以校验Kubernetes证书..."
+    openssl x509 -noout -text -in ${SSL_DIR}/kubernetes.pem
+}
+
 do_create() {
    init
-   create_ca
+   create_ca_csr
    create_kubernetes_csr
+   create_admin_csr
+   create_kube_proxy_csr
+   validate_kubernetes_pem
 }
 
 do_create
