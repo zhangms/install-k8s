@@ -12,9 +12,6 @@ function createBaseConfig() {
     base_config='KUBE_BASE_OPTIONS="'
     base_config+='--logtostderr=false --log-dir=/var/log/kubernetes --v=2'
     base_config+='"\n'
-    base_config+='KUBE_MASTER="--master=https://'
-    base_config+=$kube_master_ip:$kube_master_port
-    base_config+='"\n'
     echo -e $base_config > /etc/kubernetes/config
 }
 
