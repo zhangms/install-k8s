@@ -50,6 +50,7 @@ function createServiceConfig() {
 
 function createConfigFile() {
     createBaseConfig
+    createKubeConfig
     createServiceConfig
 }
 
