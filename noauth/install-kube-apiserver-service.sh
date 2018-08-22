@@ -32,7 +32,7 @@ function createServiceConfig() {
     base_config+=' --bind-address=0.0.0.0'
     base_config+=' --secure-port='$kube_master_port
     base_config+=' --insecure-port=0'
-    base_config+=' --admission-control=ServiceAccount,NamespaceLifecycle,NamespaceExists,LimitRanger,ResourceQuota'
+    base_config+=' --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota'
     base_config+=' --etcd-servers=http://127.0.0.1:2379'
     base_config+=' --token-auth-file=/etc/kubernetes/token-auth-file'
     base_config+='"\n'
