@@ -47,6 +47,8 @@ function createKubeConfig() {
 function createServiceConfig() {
     mkdir /etc/kubernetes/
     base_config='KUBELET_OPTIONS="'
+    base_config+=' --pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google_containers/pause-amd64:3.1'
+    base_config+=' --cluster-dns=10.254.0.2'
     base_config+=' --kubeconfig=/etc/kubernetes/kubeconfig'
     base_config+=' --runtime-cgroups=/systemd/system.slice'
     base_config+=' --kubelet-cgroups=/systemd/system.slice'
