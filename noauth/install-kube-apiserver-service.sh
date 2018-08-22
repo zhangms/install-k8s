@@ -34,7 +34,7 @@ function createServiceConfig() {
     base_config+=' --insecure-port=0'
     base_config+=' --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota'
     base_config+=' --etcd-servers=http://127.0.0.1:2379'
-    base_config+=' --authorization-mode=RBAC'
+    base_config+=' --authorization-mode=Node,RBAC'
     base_config+=' --token-auth-file=/etc/kubernetes/token-auth-file'
     base_config+='"\n'
     echo -e $base_config > /etc/kubernetes/apiserver
