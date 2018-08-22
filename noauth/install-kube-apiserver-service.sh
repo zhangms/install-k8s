@@ -43,7 +43,7 @@ function createServiceConfig() {
 
     base_config='KUBE_API_OPTIONS="'
     base_config+=' --insecure-bind-address='$kube_master_ip
-    base_config+=' --in-secure-port='$kube_master_port
+    base_config+=' --insecure-port='$kube_master_port
     base_config+=' --anonymous-auth=true'
     base_config+=' --authorization-mode=AlwaysAllow'
     base_config+=' --etcd-servers=http://127.0.0.1:2379'
