@@ -47,8 +47,8 @@ function createKubeConfig() {
 function createServiceConfig() {
     mkdir /etc/kubernetes/
     base_config='KUBELET_OPTIONS="'
-    base_config+='--bootstrap-kubeconfig=/etc/kubernetes/bootstrap.kubeconfig'
-    base_config+='--kubeconfig=/etc/kubernetes/kubelet.conf'
+    base_config+='--bootstrap-kubeconfig=/etc/kubernetes/bootstrap.kubeconfig '
+    base_config+='--kubeconfig=/etc/kubernetes/kubelet.conf '
     base_config+='"\n'
     echo -e $base_config > /etc/kubernetes/kubelet
 }
