@@ -37,6 +37,7 @@ function createBaseConfig() {
 }
 
 function createKubeConfig() {
+    rm -rf /etc/kubernetes/kubelet.conf
     kubectl config set-cluster kubernetes-demo \
       --server=http://${kube_master_ip}:${kube_master_port} \
       --kubeconfig=/etc/kubernetes/kubelet.conf \
