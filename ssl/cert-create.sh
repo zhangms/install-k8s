@@ -37,7 +37,7 @@ init() {
 }
 
 create_ca_config_json() {
-cat <<EOF > ${SSL_DIR}/ca-conf.json
+cat <<EOF > ${SSL_DIR}/ca-config.json
 {
   "signing": {
     "default": {
