@@ -42,11 +42,11 @@ function createServiceConfig() {
     mkdir /etc/kubernetes/
 
     base_config='KUBE_API_OPTIONS="'
-    base_config+='--bind-address='$kube_master_ip' '
-    base_config+='--secure-port='$kube_master_port' '
-    base_config+='--anonymous-auth=true '
-    base_config+='--authorization-mode=AlwaysAllow '
-    base_config+='--etcd-servers=http://127.0.0.1:2379 '
+    base_config+=' --insecure-bind-address='$kube_master_ip
+    base_config+=' --in-secure-port='$kube_master_port
+    base_config+=' --anonymous-auth=true'
+    base_config+=' --authorization-mode=AlwaysAllow'
+    base_config+=' --etcd-servers=http://127.0.0.1:2379'
     base_config+='"\n'
     echo -e $base_config > /etc/kubernetes/apiserver
 }
